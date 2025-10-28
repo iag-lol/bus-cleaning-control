@@ -41,11 +41,13 @@ class Settings(BaseSettings):
     @classmethod
     def assemble_cors_origins(cls, v: str | List[str]) -> List[str]:
         """Parse CORS origins from comma-separated string or list."""
+        if v == "*":
+            return ["*"]
         if isinstance(v, str) and not v.startswith("["):
             return [i.strip() for i in v.split(",")]
         elif isinstance(v, list):
             return v
-        raise ValueError(v)
+        return ["http://localhost:5173"]
 
     # Redis
     REDIS_URL: Optional[str] = None
