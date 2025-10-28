@@ -12,6 +12,7 @@ from app.api import auth, buses, events, alerts, reports
 from app.api.events import ai_router
 from app.core.config import settings
 from app.core.database import init_db
+from app.core.initial_data import ensure_default_admin
 
 # Configure logging
 logging.basicConfig(
@@ -88,6 +89,8 @@ async def lifespan(app: FastAPI) -> AsyncGenerator:
     logger.info("Starting up...")
     await init_db()
     logger.info("Database initialized")
+    if await ensure_default_admin():
+        logger.info("Default admin user created")
 
     yield
 

@@ -11,7 +11,7 @@ python3 -m venv venv
 source venv/bin/activate
 
 # Instalar dependencias mínimas
-pip3 install --quiet fastapi uvicorn[standard] sqlmodel aiosqlite pydantic pydantic-settings python-jose[cryptography] passlib[bcrypt] python-dotenv
+pip3 install --quiet fastapi uvicorn[standard] sqlmodel aiosqlite pydantic pydantic-settings python-jose[cryptography] python-dotenv bcrypt
 
 # Crear admin
 python3 -m app.scripts.create_admin
