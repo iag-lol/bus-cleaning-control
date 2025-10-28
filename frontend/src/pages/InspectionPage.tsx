@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { Camera, Upload, Send, Check, AlertCircle, HelpCircle } from 'lucide-react'
+import { Camera, Send, Check, AlertCircle, HelpCircle } from 'lucide-react'
 import api from '../services/api'
 import type { Bus, CleaningState, AnalysisResponse } from '../types'
 
