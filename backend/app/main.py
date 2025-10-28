@@ -104,9 +104,14 @@ app = FastAPI(
 )
 
 # Configure CORS
+# Allow all .onrender.com domains in production
+allowed_origins = settings.BACKEND_CORS_ORIGINS
+if settings.ENVIRONMENT == "production":
+    allowed_origins = ["*"]  # Allow all origins in production for Render
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.BACKEND_CORS_ORIGINS,
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
