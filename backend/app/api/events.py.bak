@@ -28,7 +28,7 @@ router = APIRouter(prefix="/events", tags=["Cleaning Events"])
 async def create_event(
     event_data: CleaningEventCreate,
     session: AsyncSession = Depends(get_session),
-    
+    current_user: User = Depends(get_current_user),
 ) -> CleaningEvent:
     """
     Create a new cleaning event.
@@ -56,10 +56,10 @@ async def create_event(
             detail="Bus not found",
         )
 
-    # Create event (sin autenticación - user_id = 1)
+    # Create event
     event = CleaningEvent(
         bus_id=event_data.bus_id,
-        user_id=1,  # Usuario por defecto (admin)
+        user_id=current_user.id,
         estado=event_data.estado,
         confidence=event_data.confidence,
         observaciones=event_data.observaciones,
@@ -82,7 +82,7 @@ async def create_event(
                 "id": event.id,
                 "bus_id": event.bus_id,
                 "bus_ppu": bus.ppu,
-                "user_nombre": "Sistema",
+                "user_nombre": current_user.nombre,
                 "estado": event.estado.value,
                 "confidence": event.confidence,
                 "created_at": event.created_at.isoformat(),
@@ -126,7 +126,7 @@ async def list_events(
     skip: int = Query(0, ge=0),
     limit: int = Query(100, ge=1, le=100),
     session: AsyncSession = Depends(get_session),
-    
+    current_user: User = Depends(get_current_user),
 ) -> List[dict]:
     """
     List cleaning events with optional filters.
@@ -186,7 +186,7 @@ async def list_events(
 async def get_event(
     event_id: int,
     session: AsyncSession = Depends(get_session),
-    
+    current_user: User = Depends(get_current_user),
 ) -> dict:
     """
     Get event by ID.
@@ -233,7 +233,7 @@ ai_router = APIRouter(prefix="/ai", tags=["AI Analysis"])
 @ai_router.post("/analyze", response_model=AnalysisResponse)
 async def analyze_image(
     request: AnalysisRequest,
-    
+    current_user: User = Depends(get_current_user),
 ) -> AnalysisResponse:
     """
     Analyze image to detect cleaning state.

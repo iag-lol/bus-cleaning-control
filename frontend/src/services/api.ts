@@ -32,11 +32,8 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
-    if (error.response?.status === 401) {
-      // Token expired, logout
-      localStorage.removeItem('auth-storage')
-      window.location.href = '/login'
-    }
+    // Login deshabilitado - no redirigir a login
+    console.error('API Error:', error)
     return Promise.reject(error)
   }
 )

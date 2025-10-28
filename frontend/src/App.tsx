@@ -1,51 +1,35 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-import { useAuthStore } from './stores/authStore'
-import LoginPage from './pages/LoginPage'
 import InspectionPage from './pages/InspectionPage'
 import DashboardPage from './pages/DashboardPage'
 import Layout from './components/Layout'
 
 function App() {
-  const { isAuthenticated } = useAuthStore()
-
+  // Login deshabilitado - acceso directo
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/login" element={<LoginPage />} />
         <Route
           path="/"
           element={
-            isAuthenticated ? (
-              <Layout>
-                <Navigate to="/inspection" replace />
-              </Layout>
-            ) : (
-              <Navigate to="/login" replace />
-            )
+            <Layout>
+              <Navigate to="/inspection" replace />
+            </Layout>
           }
         />
         <Route
           path="/inspection"
           element={
-            isAuthenticated ? (
-              <Layout>
-                <InspectionPage />
-              </Layout>
-            ) : (
-              <Navigate to="/login" replace />
-            )
+            <Layout>
+              <InspectionPage />
+            </Layout>
           }
         />
         <Route
           path="/dashboard"
           element={
-            isAuthenticated ? (
-              <Layout>
-                <DashboardPage />
-              </Layout>
-            ) : (
-              <Navigate to="/login" replace />
-            )
+            <Layout>
+              <DashboardPage />
+            </Layout>
           }
         />
       </Routes>

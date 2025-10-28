@@ -1,7 +1,6 @@
 import { ReactNode } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { ClipboardCheck, BarChart3, LogOut, Menu } from 'lucide-react'
-import { useAuthStore } from '../stores/authStore'
+import { Link, useLocation } from 'react-router-dom'
+import { ClipboardCheck, BarChart3, Menu } from 'lucide-react'
 import { useState } from 'react'
 
 interface LayoutProps {
@@ -10,15 +9,7 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   const location = useLocation()
-  const navigate = useNavigate()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-
-  const { user, logout } = useAuthStore()
-
-  const handleLogout = () => {
-    logout()
-    navigate('/login')
-  }
 
   const navItems = [
     { path: '/inspection', icon: ClipboardCheck, label: 'Inspección' },
@@ -59,19 +50,8 @@ export default function Layout({ children }: LayoutProps) {
               })}
             </nav>
 
-            {/* User menu */}
+            {/* Mobile menu button */}
             <div className="flex items-center gap-4">
-              <div className="hidden sm:block text-sm">
-                <p className="font-medium">{user?.nombre}</p>
-                <p className="text-gray-500 text-xs">{user?.email}</p>
-              </div>
-              <button
-                onClick={handleLogout}
-                className="btn btn-secondary flex items-center gap-2"
-              >
-                <LogOut className="w-4 h-4" />
-                <span className="hidden sm:inline">Salir</span>
-              </button>
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className="md:hidden btn btn-secondary"
