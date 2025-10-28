@@ -53,3 +53,4 @@ hiredis==2.3.2
 # Web Push
 py-vapid==1.9.0
 pywebpush==1.14.0
+aiosqlite==0.19.0
